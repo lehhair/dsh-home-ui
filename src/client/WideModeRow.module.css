@@ -1,0 +1,71 @@
+/* WideMode preference row: title/description plus three width-mode cubes,
+   mirroring the Appearance row's cube row geometry (ui-theme). */
+
+.group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--dsw-alias-border-l2);
+}
+
+.rowText {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-right: 16px;
+}
+
+.title {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 22px;
+  color: var(--dsw-alias-label-primary);
+}
+
+.desc {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 18px;
+  color: var(--dsw-alias-label-tertiary);
+}
+
+.cubeRow {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.modeCube {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  height: 32px;
+  padding: 0 12px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: transparent;
+  font-size: 13px;
+  line-height: 20px;
+  font-weight: 400;
+  color: var(--dsw-alias-label-secondary);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.modeCube:hover {
+  background: var(--dsw-alias-interactive-bg-hover);
+}
+
+.modeCube.selected {
+  background: var(--dsw-alias-interactive-bg-hover-solid);
+  border-color: var(--dsw-alias-border-l2);
+  color: var(--dsw-alias-label-primary);
+  font-weight: 500;
+}

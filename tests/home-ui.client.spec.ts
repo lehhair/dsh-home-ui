@@ -126,4 +126,32 @@ describe('home-ui.css stylesheet contract', () => {
     // The band hangs BELOW the header (OpenCodeUI's top-full shadow), not inside it.
     expect(css).toContain(`top: 100%`)
   })
+
+  it('widens the feed in wide mode via the shared width variable', () => {
+    // Wide mode rewrites --dsh-chat-content-width on the conversation root
+    // ([data-phase]), the one variable every column surface reads. The
+    // selector combines the plugin scope and the wide attribute, both on
+    // <html>.
+    expect(css).toContain(`[data-dsh-home-ui][data-dsh-wide] [data-phase]`)
+    expect(css).toContain(`--dsh-chat-content-width: 1080px`)
+    // No compact mode: the preference is Standard / Wide only.
+    expect(css).not.toContain(`data-dsh-compact`)
+    expect(css).not.toContain(`640px`)
+  })
+
+  it('persists and loads the wide mode via localStorage', () => {
+    // The preference survives reloads through localStorage (this plugin has
+    // no Host settings namespace). jsdom provides localStorage.
+    const { loadWideMode, saveWideMode, isWideMode, WIDE_MODE_STORAGE_KEY, DEFAULT_MODE } = require('../src/client/wide-settings.ts') as typeof import('../src/client/wide-settings.ts')
+    localStorage.removeItem(WIDE_MODE_STORAGE_KEY)
+    expect(loadWideMode()).toBe(DEFAULT_MODE)
+    saveWideMode('wide')
+    expect(loadWideMode()).toBe('wide')
+    expect(isWideMode('standard')).toBe(true)
+    expect(isWideMode('wide')).toBe(true)
+    expect(isWideMode('compact')).toBe(false)
+    localStorage.setItem(WIDE_MODE_STORAGE_KEY, 'garbage')
+    expect(loadWideMode()).toBe(DEFAULT_MODE)
+    localStorage.removeItem(WIDE_MODE_STORAGE_KEY)
+  })
 })

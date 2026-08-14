@@ -17,6 +17,18 @@ importers:
       '@deepseek-ai/dsh-client-test-runtime':
         specifier: link:../dsh2026/deepseek-harness/packages/test-support/client-runtime
         version: link:../dsh2026/deepseek-harness/packages/test-support/client-runtime
+      '@deepseek-ai/dsh-client-ui-conversation':
+        specifier: link:../dsh2026/deepseek-harness/packages/client/ui-conversation
+        version: link:../dsh2026/deepseek-harness/packages/client/ui-conversation
+      '@deepseek-ai/dsh-client-ui-primitives':
+        specifier: link:../dsh2026/deepseek-harness/packages/client/ui-primitives
+        version: link:../dsh2026/deepseek-harness/packages/client/ui-primitives
+      '@deepseek-ai/dsh-client-ui-settings':
+        specifier: link:../dsh2026/deepseek-harness/packages/client/ui-settings
+        version: link:../dsh2026/deepseek-harness/packages/client/ui-settings
+      '@deepseek-ai/dsh-client-ui-settings-general':
+        specifier: link:../dsh2026/deepseek-harness/packages/client/ui-settings-general
+        version: link:../dsh2026/deepseek-harness/packages/client/ui-settings-general
       '@deepseek-ai/dsh-client-ui-slots':
         specifier: link:../dsh2026/deepseek-harness/packages/client/ui-slots
         version: link:../dsh2026/deepseek-harness/packages/client/ui-slots
@@ -35,6 +47,9 @@ importers:
       '@types/react-dom':
         specifier: ^18.3.1
         version: 18.3.7(@types/react@18.3.31)
+      clsx:
+        specifier: ^2.1.1
+        version: 2.1.1
       cordis:
         specifier: link:../dsh2026/deepseek-harness/vendor/cordis
         version: link:../dsh2026/deepseek-harness/vendor/cordis
@@ -431,6 +446,10 @@ packages:
   chai@6.2.2:
     resolution: {integrity: sha512-NUPRluOfOiTKBKvWPtSD4PhFvWCqOi0BGStNWs57X9js7XGTprSmFoz5F0tWhR4WPjNeR9jXqdC7/UpSJTnlRg==}
     engines: {node: '>=18'}
+
+  clsx@2.1.1:
+    resolution: {integrity: sha512-eYm0QWBtUrBWZWG0d386OGAw16Z995PiOVo2B7bjWSbHedGl5e0ZWaq65kOGgUSNesEIDkB9ISbTg/JK9dhCZA==}
+    engines: {node: '>=6'}
 
   convert-source-map@2.0.0:
     resolution: {integrity: sha512-Kvp459HrV2FEJ1CAsi1Ku+MY3kasH19TFykTz2xWmMeq6bk2NU3XXvfJ+Q61m0xktWwt+1HSYf3JZsTms3aRJg==}
@@ -1244,6 +1263,8 @@ snapshots:
   cac@7.0.0: {}
 
   chai@6.2.2: {}
+
+  clsx@2.1.1: {}
 
   convert-source-map@2.0.0: {}
 

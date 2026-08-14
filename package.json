@@ -34,33 +34,42 @@
     },
     "client": {
       "inject": [
-        "@deepseek-ai/dsh-client-runtime"
+        "@deepseek-ai/dsh-client-runtime",
+        "@deepseek-ai/dsh-client-ui-settings"
       ],
       "platform": "web"
     }
   },
   "peerDependencies": {
+    "@deepseek-ai/dsh-client-ui-conversation": "*",
+    "@deepseek-ai/dsh-client-ui-settings": "*",
     "cordis": "^4.0.0-rc.7",
-    "react": "^18.2.0"
+    "react": "^18.2.0",
+    "@deepseek-ai/dsh-client-ui-settings-general": "*"
   },
   "devDependencies": {
     "@deepseek-ai/dsh-client-locale": "link:../dsh2026/deepseek-harness/packages/client/locale",
     "@deepseek-ai/dsh-client-runtime": "link:../dsh2026/deepseek-harness/packages/client/runtime",
     "@deepseek-ai/dsh-client-test-runtime": "link:../dsh2026/deepseek-harness/packages/test-support/client-runtime",
+    "@deepseek-ai/dsh-client-ui-conversation": "link:../dsh2026/deepseek-harness/packages/client/ui-conversation",
+    "@deepseek-ai/dsh-client-ui-primitives": "link:../dsh2026/deepseek-harness/packages/client/ui-primitives",
+    "@deepseek-ai/dsh-client-ui-settings": "link:../dsh2026/deepseek-harness/packages/client/ui-settings",
     "@deepseek-ai/dsh-client-ui-slots": "link:../dsh2026/deepseek-harness/packages/client/ui-slots",
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/react": "^16.1.0",
     "@types/node": "^22.0.0",
     "@types/react": "~18.3.1",
     "@types/react-dom": "^18.3.1",
+    "clsx": "^2.1.1",
     "cordis": "link:../dsh2026/deepseek-harness/vendor/cordis",
+    "jsdom": "^26.0.0",
+    "lightningcss": "^1.30.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "tsdown": "^0.22.2",
     "typescript": "^5.9.3",
     "vitest": "^4.1.1",
-    "lightningcss": "^1.30.0",
-    "@testing-library/react": "^16.1.0",
-    "@testing-library/dom": "^10.4.0",
-    "jsdom": "^26.0.0"
+    "@deepseek-ai/dsh-client-ui-settings-general": "link:../dsh2026/deepseek-harness/packages/client/ui-settings-general"
   },
   "license": "BSD-3-Clause"
 }
