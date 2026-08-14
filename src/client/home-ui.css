@@ -86,6 +86,42 @@
   padding-top: 0;
 }
 
+/* The collapsed rail keeps the stock 18px top padding, which drops the
+   rail's toggle 14px below the header title line (toggle center 36 vs
+   title center 22). Trim the shell's top padding to 4px so the 36px rail
+   control box centers on the same line as the expanded controls and the
+   header title. The frame carries data-sidebar-collapsed only in the
+   collapsed state, so the chain cannot collide with the expanded rules
+   above. */
+[data-dsh-home-ui] div[data-sidebar-collapsed]
+  > :first-child > [data-slot='sidebar'] > :first-child {
+  padding-top: 4px;
+}
+
+/* Collapse ANIMATION mid-states: the frame flips data-sidebar-collapsed
+   immediately (React state), while the wide content only fades out over
+   ~150ms (SidebarRoot's .fading phase) before the rail settles. Without a
+   mid-state rule the logo row snaps back to its stock 60px/8px geometry
+   the instant the attribute lands, dropping the control center from the
+   title line (22) down to 34 and back — a visible jump during the fade.
+   The fading logo row still holds TWO buttons (brand + toggle); the
+   settled rail holds only the toggle. :has() pins the mid-state to the
+   same 52px/0 geometry and 0 top padding as the expanded state, so the
+   control center stays on the title line for the whole transition; the
+   settled rail (single button) falls through to the 36px / 4px rules
+   above. Both centers resolve to 22, so there is no jump at settle
+   either. */
+[data-dsh-home-ui] div[data-sidebar-collapsed]
+  > :first-child > [data-slot='sidebar'] > :first-child:has(> :first-child > :nth-child(2)) {
+  padding-top: 0;
+}
+
+[data-dsh-home-ui] div[data-sidebar-collapsed]
+  > :first-child > [data-slot='sidebar'] > :first-child > :first-child:has(> :nth-child(2)) {
+  height: 52px;
+  padding-top: 0;
+}
+
 /* ---------- 3. header hairline -> soft gradient ---------- */
 
 /* Replace the stock 1px solid hairline (header::after, border-l2) with a

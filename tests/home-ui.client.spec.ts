@@ -94,10 +94,32 @@ describe('home-ui.css stylesheet contract', () => {
     // shell root loses its 6px top padding and the logo row shrinks 60->52px
     // with its 8px top padding removed, so the controls' center aligns with
     // the header title. The :not([data-sidebar-collapsed]) pin keeps the
-    // collapsed rail and details-open states at stock geometry.
+    // details-open state at stock geometry.
     expect(css).toContain(`div[data-details-collapsed]:not([data-sidebar-collapsed])`)
     expect(css).toContain(`> :first-child > [data-slot='sidebar'] > :first-child`)
     expect(css).toContain(`padding-top: 0`)
+    expect(css).toContain(`height: 52px`)
+  })
+
+  it('aligns the collapsed rail toggle with the header title line', () => {
+    // The collapsed state carries data-sidebar-collapsed on the frame: the
+    // shell root's top padding drops 18px -> 4px so the 36px rail control
+    // box centers on the same line as the expanded controls and the title.
+    expect(css).toContain(`div[data-sidebar-collapsed]`)
+    expect(css).toContain(`> :first-child > [data-slot='sidebar'] > :first-child`)
+    expect(css).toContain(`padding-top: 4px`)
+  })
+
+  it('keeps the collapse animation mid-state on the title line', () => {
+    // The frame flips data-sidebar-collapsed immediately while the wide
+    // content fades out (~150ms) before the rail settles; without a
+    // mid-state rule the logo row snaps back to stock 60px/8px and the
+    // control center jumps 22 -> 34 during the fade. The :has() rules pin
+    // the fading logo row (still two buttons: brand + toggle) to the same
+    // 52px / 0 geometry and 0 top padding as expanded.
+    expect(css).toContain(`:has(> :first-child > :nth-child(2))`)
+    expect(css).toContain(`padding-top: 0`)
+    expect(css).toContain(`> :first-child > :first-child:has(> :nth-child(2))`)
     expect(css).toContain(`height: 52px`)
   })
 
