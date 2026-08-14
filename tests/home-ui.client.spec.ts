@@ -89,6 +89,18 @@ describe('home-ui.css stylesheet contract', () => {
     expect(css).toContain(`padding-top: 6px`)
   })
 
+  it('raises the sidebar control row to the header title line', () => {
+    // The sidebar-EXPANDED, details-collapsed state (home feed default): the
+    // shell root loses its 6px top padding and the logo row shrinks 60->52px
+    // with its 8px top padding removed, so the controls' center aligns with
+    // the header title. The :not([data-sidebar-collapsed]) pin keeps the
+    // collapsed rail and details-open states at stock geometry.
+    expect(css).toContain(`div[data-details-collapsed]:not([data-sidebar-collapsed])`)
+    expect(css).toContain(`> :first-child > [data-slot='sidebar'] > :first-child`)
+    expect(css).toContain(`padding-top: 0`)
+    expect(css).toContain(`height: 52px`)
+  })
+
   it('replaces the header hairline with a gradient fade band', () => {
     // The ::after band must read the feed background and fade to transparent.
     expect(css).toContain(`header::after`)

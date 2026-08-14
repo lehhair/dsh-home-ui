@@ -55,13 +55,35 @@
 /* ---------- 2. feed header aligned with the sidebar controls ---------- */
 
 /* The stock header pads its top 12px while the sidebar shell starts its
-   control column at 6px; giving the header the same 6px top start aligns
-   its title row with the sidebar's collapse toggle / new-session button
-   (PiUI draws the feed header and the sidebar toolbar on one line). The
-   header element is the page's only <header>, wrapped by the
-   conversation.session.header slot seat. */
+   control column at 6px; giving the header the same 6px top start brings
+   its title row up to the sidebar's control row height (PiUI draws the feed
+   header and the sidebar toolbar on one line). The header element is the
+   page's only <header>, wrapped by the conversation.session.header slot
+   seat. */
 [data-dsh-home-ui] [data-slot='conversation.session.header'] header {
   padding-top: 6px;
+}
+
+/* The sidebar's top control row (brand + collapse toggle, vertically
+   centered in the 60px logo row) still sits lower than the header title
+   text — its center is ~14px below the title's. Raise it to the title's
+   line by trimming the shell's 6px top padding and the logo row's 8px top
+   padding (60px -> 52px keeps the same 44px content box, so the controls
+   keep their geometry, just higher). The chain walks the frame's first
+   child (the sidebar column) through the sidebar slot seat (display:
+   contents) to the shell root and its first child, the logo row. The frame
+   union plus :not([data-sidebar-collapsed]) pins the sidebar-EXPANDED,
+   details-collapsed state (the home feed default); the collapsed rail and
+   the details-open state keep the stock geometry. */
+[data-dsh-home-ui] div[data-details-collapsed]:not([data-sidebar-collapsed])
+  > :first-child > [data-slot='sidebar'] > :first-child {
+  padding-top: 0;
+}
+
+[data-dsh-home-ui] div[data-details-collapsed]:not([data-sidebar-collapsed])
+  > :first-child > [data-slot='sidebar'] > :first-child > :first-child {
+  height: 52px;
+  padding-top: 0;
 }
 
 /* ---------- 3. header hairline -> soft gradient ---------- */
