@@ -1,0 +1,83 @@
+/* dsh-home-ui global sheet — every rule is scoped under [data-dsh-home-ui]
+   (set on <html> by the controller at apply), so uninstalling the plugin
+   leaves the stock GUI byte-identical.
+
+   Selectors key off stable, version-independent hooks only: the AppFrame's
+   data-* attributes (data-sidebar-collapsed / data-details-collapsed, which
+   the frame div itself carries in every snapshot and official bundle,
+   wherever it sits in the shell tree), the conversation skeleton's data-slot
+   seats ([data-slot='conversation.session.header']), and the bare <header>
+   element (the session header is the page's only header). No hashed class
+   names — the same sheet must work against unpatched distributions.
+
+   Three PiUI-inspired refinements:
+   1. Sidebar palette unified with the conversation feed: the sidebar column
+      and every nested shell layer rebind to the feed's base background
+      instead of the bluish-50 tint, so left rail and feed read as one
+      surface (PiUI draws sidebar and chat on the same bg).
+   2. Feed header aligned with the sidebar controls: the sidebar shell's top
+      control row starts at the column's 6px padding; the feed header gets
+      the same top start so its title row lines up with the sidebar's
+      collapse toggle / new-session button.
+   3. Header hairline -> soft gradient: the stock 1px solid hairline under
+      the header becomes a PiUI-style fade band from the feed background to
+      transparent, so the header melts into the feed instead of being cut
+      by a line. */
+
+/* ---------- 1. sidebar palette unified with the feed ---------- */
+
+/* Rebind the sidebar fill token to the feed's base background in both
+   color schemes. The token is defined on `body` by the theme sheets; the
+   scoped attribute selector wins the cascade, and the dark rebind repeats
+   the same value because the dark base is already the feed background
+   there. */
+[data-dsh-home-ui] body {
+  --dsw-specific-sidebar-fill: var(--dsw-alias-bg-base);
+}
+
+[data-dsh-home-ui] body[data-ds-dark-theme] {
+  --dsw-specific-sidebar-fill: var(--dsw-alias-bg-base);
+}
+
+/* The layout column also paints the old tint directly (AppFrame.module.css
+   sidebarCol). The union of the two frame attributes always selects the
+   frame; its first child is the sidebar column in every state (expanded,
+   rail, details open/closed). */
+[data-dsh-home-ui] div[data-sidebar-collapsed] > :first-child,
+[data-dsh-home-ui] div[data-details-collapsed] > :first-child {
+  background: var(--dsw-alias-bg-base);
+}
+
+/* The sidebar shell's own fill (specific-sidebar-fill) was the only tinted
+   layer left; the token rebind above already takes the shell, so nothing
+   further is needed there. */
+
+/* ---------- 2. feed header aligned with the sidebar controls ---------- */
+
+/* The stock header pads its top 12px while the sidebar shell starts its
+   control column at 6px; giving the header the same 6px top start aligns
+   its title row with the sidebar's collapse toggle / new-session button
+   (PiUI draws the feed header and the sidebar toolbar on one line). The
+   header element is the page's only <header>, wrapped by the
+   conversation.session.header slot seat. */
+[data-dsh-home-ui] [data-slot='conversation.session.header'] header {
+  padding-top: 6px;
+}
+
+/* ---------- 3. header hairline -> soft gradient ---------- */
+
+/* Replace the stock 1px solid hairline (header::after, border-l2) with a
+   PiUI-style fade band: from the feed base background (opaque) down to
+   transparent, so content emerges from under the header instead of being
+   cut by a line. The band hangs below the header (top: 100%), overlapping
+   the top of the scroll body — exactly like PiUI's data-chat-header-shadow
+   (h-8 from-bg-100 to-transparent). It paints above ordinary scroll-body
+   content but below the sticky composer seat, and never intercepts
+   pointers. */
+[data-dsh-home-ui] [data-slot='conversation.session.header'] header::after {
+  top: 100%;
+  bottom: auto;
+  z-index: 5;
+  height: 32px;
+  background: linear-gradient(180deg, var(--dsw-alias-bg-base), transparent);
+}
