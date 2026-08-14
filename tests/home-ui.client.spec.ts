@@ -84,43 +84,38 @@ describe('home-ui.css stylesheet contract', () => {
     expect(css).toContain(`background: var(--dsw-alias-bg-base)`)
   })
 
-  it('aligns the feed header top with the sidebar 6px control start', () => {
+  it('lowers the header title onto the sidebar control line', () => {
+    // The sidebar's top control row centers at 36 in both expanded and
+    // collapsed states (STOCK geometry — this plugin never touches the
+    // sidebar's own padding/height). The stock header title sits at center
+    // 28 (12px top padding); 20px top padding drops it to center 36,
+    // aligned with the sidebar controls. The header element is the page's
+    // only <header>, wrapped by the conversation.session.header slot seat.
     expect(css).toContain(`[data-slot='conversation.session.header'] header`)
-    expect(css).toContain(`padding-top: 6px`)
+    expect(css).toContain(`padding-top: 20px`)
   })
 
-  it('raises the sidebar control row to the header title line', () => {
-    // The sidebar-EXPANDED, details-collapsed state (home feed default): the
-    // shell root loses its 6px top padding and the logo row shrinks 60->52px
-    // with its 8px top padding removed, so the controls' center aligns with
-    // the header title. The :not([data-sidebar-collapsed]) pin keeps the
-    // details-open state at stock geometry.
-    expect(css).toContain(`div[data-details-collapsed]:not([data-sidebar-collapsed])`)
-    expect(css).toContain(`> :first-child > [data-slot='sidebar'] > :first-child`)
-    expect(css).toContain(`padding-top: 0`)
-    expect(css).toContain(`height: 52px`)
+  it('excludes split panes from the title lowering', () => {
+    // The split-panes plugin renders the stock conversation inside a padded
+    // frame where the stock 12px already lands the title on the sidebar's
+    // line (center ~37); lowering it there would push the pane header off
+    // the sidebar. The split container carries a stable data-direction
+    // attribute (never a hashed class), so the pane-header rule restores
+    // the stock 12px for headers inside it.
+    expect(css).toContain(`[data-slot='conversation.panes'] [data-direction]`)
+    expect(css).toContain(`[data-slot='conversation.session.header'] header`)
+    expect(css).toContain(`padding-top: 12px`)
   })
 
-  it('aligns the collapsed rail toggle with the header title line', () => {
-    // The collapsed state carries data-sidebar-collapsed on the frame: the
-    // shell root's top padding drops 18px -> 4px so the 36px rail control
-    // box centers on the same line as the expanded controls and the title.
-    expect(css).toContain(`div[data-sidebar-collapsed]`)
-    expect(css).toContain(`> :first-child > [data-slot='sidebar'] > :first-child`)
-    expect(css).toContain(`padding-top: 4px`)
-  })
-
-  it('keeps the collapse animation mid-state on the title line', () => {
-    // The frame flips data-sidebar-collapsed immediately while the wide
-    // content fades out (~150ms) before the rail settles; without a
-    // mid-state rule the logo row snaps back to stock 60px/8px and the
-    // control center jumps 22 -> 34 during the fade. The :has() rules pin
-    // the fading logo row (still two buttons: brand + toggle) to the same
-    // 52px / 0 geometry and 0 top padding as expanded.
-    expect(css).toContain(`:has(> :first-child > :nth-child(2))`)
-    expect(css).toContain(`padding-top: 0`)
-    expect(css).toContain(`> :first-child > :first-child:has(> :nth-child(2))`)
-    expect(css).toContain(`height: 52px`)
+  it('does not modify the sidebar geometry', () => {
+    // The alignment is achieved entirely by lowering the header title; the
+    // sidebar shell root and logo row keep their stock padding/height, so
+    // no data-sidebar-collapsed / data-details-collapsed geometry rules
+    // may exist in the sheet.
+    expect(css).not.toContain(`height: 52px`)
+    expect(css).not.toContain(`padding-top: 4px`)
+    expect(css).not.toContain(`padding-top: 0`)
+    expect(css).not.toContain(`:has(`)
   })
 
   it('replaces the header hairline with a gradient fade band', () => {
@@ -128,7 +123,7 @@ describe('home-ui.css stylesheet contract', () => {
     expect(css).toContain(`header::after`)
     expect(css).toContain(`linear-gradient(180deg, var(--dsw-alias-bg-base), transparent)`)
     expect(css).toContain(`height: 32px`)
-    // The band hangs BELOW the header (PiUI's top-full shadow), not inside it.
+    // The band hangs BELOW the header (OpenCodeUI's top-full shadow), not inside it.
     expect(css).toContain(`top: 100%`)
   })
 })
