@@ -61,3 +61,7 @@ pnpm run check   # typecheck + test + build
 ```
 
 测试覆盖：控制器作用域属性的幂等挂载/卸载、样式表的静态契约（全部规则作用域化、token 重绑、对齐与渐变规则存在）、宽屏 localStorage 持久化。
+
+## 友情链接 / Friend Links
+
+- [DSHFind](https://dshfind.com/) — DeepSeek Harness 插件市场与学习社区
