@@ -1,3 +1,5 @@
+[![dshfind](https://dshfind.com/api/badge/lehhair/dsh-home-ui?lang=zh)](https://dshfind.com/zh/plugins/lehhair/dsh-home-ui?ref=badge)
+
 # dsh-home-ui
 
 基于 [OpenCodeUI](https://github.com/lehhair/OpenCodeUI) 视觉语言的主页信息流精修插件（纯扩展，零核心改动）。
