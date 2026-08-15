@@ -17,6 +17,18 @@
 
 ## 安装
 
+### 推荐：GitHub Release 构建产物（开箱即用）
+
+`releases/latest` 永远指向最新版本，链接不用随版本改动：
+
+```sh
+dsh plugin --profile web add "https://github.com/lehhair/dsh-home-ui/releases/latest/download/dsh-external-dsh-home-ui.tgz"
+```
+
+> ⚠️ 升级注意：pnpm 会按 URL 缓存 tarball——同一 `latest` 链接在新版本发布后可能命中旧缓存。装到旧版时先 `dsh plugin --profile web remove @dsh-external/dsh-home-ui` 再重新安装（必要时 `pnpm store prune`）。
+
+### 开发环境（从源码）
+
 ```bash
 # 在 dsh profile 目录
 pnpm dsh plugin --profile web add @dsh-external/dsh-home-ui
